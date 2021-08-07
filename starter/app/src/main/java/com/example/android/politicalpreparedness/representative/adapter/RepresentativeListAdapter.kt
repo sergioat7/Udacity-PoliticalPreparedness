@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.R
-import com.example.android.politicalpreparedness.databinding.ViewholderRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
 
+//TODO: uncomment
+/*
 class RepresentativeListAdapter: ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepresentativeViewHolder {
@@ -77,7 +78,7 @@ class RepresentativeViewHolder(val binding: ViewholderRepresentativeBinding): Re
     }
 
 }
-
+*/
 //TODO: Create RepresentativeDiffCallback
 
 //TODO: Create RepresentativeListener
