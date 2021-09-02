@@ -8,9 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import java.util.*
 
 class RepresentativeFragment : Fragment() {
@@ -20,6 +23,7 @@ class RepresentativeFragment : Fragment() {
     }
 
     //TODO: Declare ViewModel
+    private lateinit var adapter: RepresentativeListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,10 +31,18 @@ class RepresentativeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentRepresentativeBinding.inflate(inflater)
+        
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.states,
+            android.R.layout.simple_spinner_item
+        ).also {
+            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.state.adapter = it
+        }
 
-        //TODO: Establish bindings
-
-        //TODO: Define and assign Representative adapter
+        adapter = RepresentativeListAdapter()
+        binding.rvRepresentatives.adapter = adapter
 
         //TODO: Populate Representative adapter
 

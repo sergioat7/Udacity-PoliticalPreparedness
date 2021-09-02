@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="election"
+            type="com.example.android.politicalpreparedness.network.models.Election" />
+
+        <variable
+            name="clickListener"
+            type="com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter.ElectionListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(election)}"
+        android:paddingTop="@dimen/normal_padding">
+
+        <TextView
+            android:id="@+id/tvElectionName"
+            style="@style/PoliticalPreparedness.MaterialComponents.TextView.Subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{election.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="VIP Test Election" />
+
+        <TextView
+            android:id="@+id/tvElectionDate"
+            style="@style/PoliticalPreparedness.MaterialComponents.TextView.Description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{election.electionDay.toString()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvElectionName"
+            tools:text="Sun Jun 06 00:00:00 EDT 2021" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

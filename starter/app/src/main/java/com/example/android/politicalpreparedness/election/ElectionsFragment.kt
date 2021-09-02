@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
+import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 
 class ElectionsFragment : Fragment() {
 
     //TODO: Declare ViewModel
+    private lateinit var upcomingAdapter: ElectionListAdapter
+    private lateinit var savedAdapter: ElectionListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,7 +28,25 @@ class ElectionsFragment : Fragment() {
 
         //TODO: Link elections to voter info
 
-        //TODO: Initiate recycler adapters
+        upcomingAdapter = ElectionListAdapter(ElectionListAdapter.ElectionListener {
+            findNavController().navigate(
+                ElectionsFragmentDirections.toVoterInfo(
+                    it.id,
+                    it.division
+                )
+            )
+        })
+        binding.rvUpcomingElections.adapter = upcomingAdapter
+
+        savedAdapter = ElectionListAdapter(ElectionListAdapter.ElectionListener {
+            findNavController().navigate(
+                ElectionsFragmentDirections.toVoterInfo(
+                    it.id,
+                    it.division
+                )
+            )
+        })
+        binding.rvSavedElection.adapter = savedAdapter
 
         //TODO: Populate recycler adapters
 

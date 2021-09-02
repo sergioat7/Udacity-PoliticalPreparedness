@@ -16,9 +16,12 @@ class VoterInfoFragment : Fragment() {
     ): View {
         val binding = FragmentVoterInfoBinding.inflate(inflater)
 
+        val electionId = VoterInfoFragmentArgs.fromBundle(requireArguments()).argElectionId
+        val division = VoterInfoFragmentArgs.fromBundle(requireArguments()).argDivision
+
         //TODO: Add ViewModel values and create ViewModel
 
-        //TODO: Add binding values
+        binding.fragment = this
 
         //TODO: Populate voter info -- hide views without provided data.
         /**
