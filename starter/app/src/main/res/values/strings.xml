@@ -13,4 +13,5 @@
     <string name="correspondence_address">Correspondence address:</string>
     <string name="follow_election">Follow election</string>
     <string name="unfollow_election">Unfollow election</string>
+    <string name="generic_error">There was an error on loading data. Please try again</string>
 </resources>
