@@ -5,13 +5,11 @@
 
     <data>
 
-        <variable
-            name="voterInfo"
-            type="com.example.android.politicalpreparedness.network.models.VoterInfoResponse" />
+        <import type="android.view.View" />
 
         <variable
-            name="fragment"
-            type="com.example.android.politicalpreparedness.election.VoterInfoFragment" />
+            name="viewModel"
+            type="com.example.android.politicalpreparedness.election.VoterInfoViewModel" />
 
     </data>
 
@@ -28,6 +26,7 @@
             android:padding="@dimen/default_padding"
             android:singleLine="true"
             app:layout_constraintTop_toTopOf="parent"
+            app:title="@{viewModel.voterInfo.election.name}"
             app:titleTextColor="@color/white" />
 
         <TextView
@@ -36,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_padding"
-            android:text="@{voterInfo.election.electionDay.toString()}"
+            android:text="@{viewModel.voterInfo.election.electionDay.toString()}"
             app:layout_constraintTop_toBottomOf="@id/election_name"
             tools:text="Tue Apr 07 00:00:00 EDT 2020" />
 
@@ -46,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal_padding"
-            android:onClickListener="@{() -> fragment.openUrl(voterInfo.state.get(0).electionAdministrationBody.electionInfoUrl)}"
+            android:onClickListener="@{() -> viewModel.setUrl(viewModel.voterInfo.state.get(0).electionAdministrationBody.electionInfoUrl)}"
             android:text="@string/election_information"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/election_date" />
@@ -56,7 +55,7 @@
             style="@style/PoliticalPreparedness.MaterialComponents.TextView.Description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClickListener="@{() -> fragment.openUrl(voterInfo.state.get(0).electionAdministrationBody.votingLocationFinderUrl)}"
+            android:onClickListener="@{() -> viewModel.setUrl(viewModel.voterInfo.state.get(0).electionAdministrationBody.votingLocationFinderUrl)}"
             android:text="@string/voting_locations"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/state_header" />
@@ -66,7 +65,7 @@
             style="@style/PoliticalPreparedness.MaterialComponents.TextView.Description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClickListener="@{() -> fragment.openUrl(voterInfo.state.get(0).electionAdministrationBody.ballotInfoUrl)}"
+            android:onClickListener="@{() -> viewModel.setUrl(viewModel.voterInfo.state.get(0).electionAdministrationBody.ballotInfoUrl)}"
             android:text="@string/ballot_information"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/state_locations" />
@@ -92,7 +91,7 @@
             style="@style/PoliticalPreparedness.MaterialComponents.TextView.Description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{voterInfo.state.get(0).electionAdministrationBody.correspondenceAddress.toFormattedString()}"
+            android:text="@{viewModel.voterInfo.state.get(0).electionAdministrationBody.correspondenceAddress.toFormattedString()}"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/state_correspondence_header" />
 
@@ -104,7 +103,9 @@
             android:layout_marginStart="@dimen/normal_padding"
             android:layout_marginEnd="@dimen/normal_padding"
             android:layout_marginBottom="@dimen/normal_padding"
-            android:text="@string/follow_election"
+            android:onClickListener="@{() -> viewModel.followUnfollowElection()}"
+            android:text="@{viewModel.isElectionFollowed() ? @string/unfollow_election : @string/follow_election}"
+            android:visibility="@{viewModel.error != null ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
