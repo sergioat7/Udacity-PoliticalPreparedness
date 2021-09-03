@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
+import com.google.android.material.snackbar.Snackbar
 
 class ElectionsFragment : Fragment() {
 
-    //TODO: Declare ViewModel
+    private lateinit var viewModel: ElectionsViewModel
     private lateinit var upcomingAdapter: ElectionListAdapter
     private lateinit var savedAdapter: ElectionListAdapter
 
@@ -22,11 +25,11 @@ class ElectionsFragment : Fragment() {
     ): View {
         val binding = FragmentElectionBinding.inflate(inflater)
 
-        //TODO: Add ViewModel values and create ViewModel
-
-        //TODO: Add binding values
-
-        //TODO: Link elections to voter info
+        val electionDao = ElectionDatabase.getInstance(requireActivity().application).electionDao
+        viewModel = ViewModelProvider(
+            this,
+            ElectionsViewModelFactory(electionDao)
+        ).get(ElectionsViewModel::class.java)
 
         upcomingAdapter = ElectionListAdapter(ElectionListAdapter.ElectionListener {
             findNavController().navigate(
@@ -48,11 +51,25 @@ class ElectionsFragment : Fragment() {
         })
         binding.rvSavedElection.adapter = savedAdapter
 
-        //TODO: Populate recycler adapters
+        viewModel.upcomingElections.observe(viewLifecycleOwner, {
+            upcomingAdapter.submitList(it)
+        })
+
+        viewModel.savedElections.observe(viewLifecycleOwner, {
+            savedAdapter.submitList(it)
+        })
+
+        viewModel.error.observe(viewLifecycleOwner, {
+            it?.let {
+                Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
+            }
+        })
 
         return binding.root
     }
 
-    //TODO: Refresh adapters when fragment loads
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshList()
+    }
 }
