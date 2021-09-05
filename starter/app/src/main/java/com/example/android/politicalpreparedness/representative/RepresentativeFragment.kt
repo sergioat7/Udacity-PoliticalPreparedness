@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
@@ -22,7 +23,7 @@ class RepresentativeFragment : Fragment() {
         //TODO: Add Constant for Location request
     }
 
-    //TODO: Declare ViewModel
+    private val viewModel: RepresentativeViewModel by viewModels()
     private lateinit var adapter: RepresentativeListAdapter
 
     override fun onCreateView(
@@ -31,7 +32,7 @@ class RepresentativeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentRepresentativeBinding.inflate(inflater)
-        
+
         ArrayAdapter.createFromResource(
             requireContext(),
             R.array.states,
@@ -42,9 +43,30 @@ class RepresentativeFragment : Fragment() {
         }
 
         adapter = RepresentativeListAdapter()
-        binding.rvRepresentatives.adapter = adapter
 
-        //TODO: Populate Representative adapter
+        binding.also { view ->
+            view.viewModel = viewModel
+            view.lifecycleOwner = this
+
+            view.rvRepresentatives.adapter = adapter
+            view.buttonLocation.setOnClickListener {
+                //TODO:
+            }
+            view.buttonSearch.setOnClickListener {
+                viewModel.setAddress(
+                    view.addressLine1.text.toString(),
+                    view.addressLine2.text.toString(),
+                    view.city.text.toString(),
+                    view.state.selectedItem as String,
+                    view.zip.text.toString()
+                )
+                viewModel.getRepresentatives()
+            }
+        }
+
+        viewModel.representatives.observe(viewLifecycleOwner, {
+            adapter.submitList(it)
+        })
 
         //TODO: Establish button listeners for field and location search
 

@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="address"
-            type="com.example.android.politicalpreparedness.network.models.Address" />
+            name="viewModel"
+            type="com.example.android.politicalpreparedness.representative.RepresentativeViewModel" />
 
     </data>
 
@@ -42,7 +42,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPostalAddress"
-                android:text="@{address.line1}"
+                android:text="@{viewModel.address.line1}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/search_title" />
@@ -52,7 +52,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPostalAddress"
-                android:text="@{address.line2}"
+                android:text="@{viewModel.address.line2}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/address_line_1" />
@@ -62,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPostalAddress"
-                android:text="@{address.city}"
+                android:text="@{viewModel.address.city}"
                 app:layout_constraintEnd_toStartOf="@id/state"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/address_line_2" />
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:maxLength="5"
-                android:text="@{address.zip}"
+                android:text="@{viewModel.address.zip}"
                 app:layout_constraintEnd_toEndOf="@id/city"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/city" />
