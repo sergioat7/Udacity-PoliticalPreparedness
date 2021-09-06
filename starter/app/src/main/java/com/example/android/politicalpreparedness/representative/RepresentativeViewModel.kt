@@ -37,7 +37,9 @@ class RepresentativeViewModel : ViewModel() {
         }
     }
 
-    //TODO: Create function get address from geo location
+    fun setAddress(value: Address) {
+        _address.value = value
+    }
 
     fun setAddress(line1: String, line2: String?, city: String, state: String, zip: String) {
         _address.value = null
