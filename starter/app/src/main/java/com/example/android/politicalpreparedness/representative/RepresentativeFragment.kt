@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.politicalpreparedness.MainActivity
@@ -62,6 +63,18 @@ class RepresentativeFragment : Fragment() {
             view.viewModel = viewModel
             view.lifecycleOwner = this
 
+            view.addressLine1.doAfterTextChanged {
+                setAddressWithFormData()
+            }
+            view.addressLine2.doAfterTextChanged {
+                setAddressWithFormData()
+            }
+            view.city.doAfterTextChanged {
+                setAddressWithFormData()
+            }
+            view.zip.doAfterTextChanged {
+                setAddressWithFormData()
+            }
             view.rvRepresentatives.adapter = adapter
             view.buttonLocation.setOnClickListener {
                 hideKeyboard()
@@ -69,13 +82,7 @@ class RepresentativeFragment : Fragment() {
             }
             view.buttonSearch.setOnClickListener {
                 hideKeyboard()
-                viewModel.setAddress(
-                    view.addressLine1.text.toString(),
-                    view.addressLine2.text.toString(),
-                    view.city.text.toString(),
-                    view.state.selectedItem as String,
-                    view.zip.text.toString()
-                )
+                setAddressWithFormData()
                 viewModel.getRepresentatives()
             }
         }
@@ -107,6 +114,16 @@ class RepresentativeFragment : Fragment() {
                 getLocation()
             }
         }
+    }
+
+    private fun setAddressWithFormData() {
+        viewModel.setAddress(
+            binding.addressLine1.text.toString(),
+            binding.addressLine2.text.toString(),
+            binding.city.text.toString(),
+            binding.state.selectedItem as String,
+            binding.zip.text.toString()
+        )
     }
 
     @SuppressLint("MissingPermission")
