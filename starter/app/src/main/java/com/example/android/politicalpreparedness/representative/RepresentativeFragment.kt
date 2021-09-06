@@ -84,6 +84,12 @@ class RepresentativeFragment : Fragment() {
             adapter.submitList(it)
         })
 
+        viewModel.error.observe(viewLifecycleOwner, {
+            it?.let {
+                Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
+            }
+        })
+
         fusedLocationClient =
             LocationServices.getFusedLocationProviderClient(activity as MainActivity)
 
@@ -130,8 +136,6 @@ class RepresentativeFragment : Fragment() {
         val geocoder = Geocoder(context, Locale.getDefault())
         return geocoder.getFromLocation(location.latitude, location.longitude, 1)
             .map { address ->
-                val pos = resources.getStringArray(R.array.states).indexOf(address.adminArea)
-                binding.state.setSelection(pos)
                 Address(
                     address.thoroughfare,
                     address.subThoroughfare,

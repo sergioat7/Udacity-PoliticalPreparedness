@@ -75,6 +75,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:inputType="textPostalAddress"
+                app:stateValue="@{viewModel.address.state}"
                 app:layout_constraintBottom_toBottomOf="@id/city"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/city"

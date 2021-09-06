@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.model.Representative
@@ -17,6 +18,9 @@ class RepresentativeViewModel : ViewModel() {
 
     private val _representatives = MutableLiveData<List<Representative>>()
     val representatives: LiveData<List<Representative>> = _representatives
+
+    private val _error = MutableLiveData<Int?>(null)
+    val error: LiveData<Int?> = _error
 
     fun getRepresentatives() {
 
@@ -32,7 +36,7 @@ class RepresentativeViewModel : ViewModel() {
                     )
                 })
             } catch (e: Exception) {
-                //TODO:
+                _error.postValue(R.string.generic_error)
             }
         }
     }
