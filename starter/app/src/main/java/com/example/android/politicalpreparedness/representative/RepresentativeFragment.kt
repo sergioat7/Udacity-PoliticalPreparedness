@@ -110,6 +110,7 @@ class RepresentativeFragment : Fragment() {
                 fusedLocationClient.lastLocation.addOnSuccessListener {
                     it?.let { location ->
                         viewModel.setAddress(geoCodeLocation(location))
+                        viewModel.getRepresentatives()
                     }
                 }
             } else {
